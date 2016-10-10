@@ -76,7 +76,8 @@ public class SinglePlayer extends AppCompatActivity implements View.OnKeyListene
                             return false;
                         }
                     }
-                    if(wordUtil.isValidWord(word)) {
+                    int x = wordUtil.isValidWord(word);
+                    if(x == 1) {
                         listAdapter.addItem(word);
                         String sysWord = wordUtil.suggestWord(word);
                         listAdapter.addItem(sysWord);
@@ -85,6 +86,9 @@ public class SinglePlayer extends AppCompatActivity implements View.OnKeyListene
                         editText.setSelection(lastWord.length());
                         if(firstEntry) firstEntry = false;
                         listView.smoothScrollToPosition(listAdapter.getCount()+1);
+                    }
+                    else if(x == -1) {
+                        Toast.makeText(this, "'" + word + "' has already been used", Toast.LENGTH_SHORT).show();
                     }
                     else {
                         Toast.makeText(this, "'" + word + "' is not a valid word!", Toast.LENGTH_SHORT).show();

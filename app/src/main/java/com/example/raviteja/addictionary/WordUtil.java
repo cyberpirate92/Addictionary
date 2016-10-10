@@ -38,18 +38,18 @@ public class WordUtil {
     }
 
     // must provide a lowercase word ONLY
-    public boolean isValidWord(String word) {
+    public int isValidWord(String word) {
         if(word.length() != 4)
-            return false;
+            return 0;
         else if(usedWords.contains(word))
-            return false;
+            return -1; // USED WORD
         else {
             int index = Collections.binarySearch(wordList, word);
             if(index >= 0 && index < wordList.size())
-                return wordList.get(index).equals(word);
-            else
-                return false;
+                if(wordList.get(index).equals(word))
+                    return 1; // TRUE
         }
+        return 0; // NOT A VALID WORD
     }
 
     public String suggestWord(String rootWord) {
@@ -61,7 +61,7 @@ public class WordUtil {
                 if(c+j != rootWord.charAt(i)) {
                     letters[i] = (char)(c+j);
                     String newWord = new String(letters);
-                    if(isValidWord(newWord)) {
+                    if(isValidWord(newWord) == 1) {
                         usedWords.add(newWord);
                         return newWord;
                     }
