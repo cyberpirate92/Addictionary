@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="10"
+    android:background="@android:color/holo_orange_dark"
+    android:padding="5dp">
+
+    <TextView
+        android:text="User"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        android:layout_weight="9"
+        android:textSize="24sp"
+        android:fontFamily="casual"
+        android:textStyle="normal|bold"
+        android:textAlignment="textEnd"
+        android:textColor="@android:color/background_dark"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@android:drawable/ic_input_add"/>
+</LinearLayout>

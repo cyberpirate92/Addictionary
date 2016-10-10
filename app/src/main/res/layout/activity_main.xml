@@ -1,0 +1,66 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000"
+    tools:context="com.example.raviteja.addictionary.MainActivity">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="25dp"
+        android:background="@drawable/background"
+        android:backgroundTint="#292"
+        android:backgroundTintMode="add"
+        android:tileMode="repeat">
+
+        <Button
+            android:text="Single Player"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="159dp"
+            android:id="@+id/button2"
+            android:background="@android:color/holo_green_light"
+            android:fontFamily="casual"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="normal|bold"
+            android:onClick="startSinglePlayer"/>
+
+        <Button
+            android:text="MY WORDS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/button3"
+            android:layout_alignEnd="@+id/button3"
+            android:layout_marginTop="34dp"
+            android:id="@+id/button4"
+            android:background="@android:color/holo_green_light"
+            android:fontFamily="casual"
+            android:textSize="18sp"
+            android:textStyle="normal|bold"
+            android:onClick="displayUserWords"/>
+
+        <Button
+            android:text="Multi Player"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button3"
+            android:background="@android:color/holo_green_light"
+            android:layout_below="@+id/button2"
+            android:layout_alignStart="@+id/button2"
+            android:layout_marginTop="36dp"
+            android:fontFamily="casual"
+            android:textSize="18sp"
+            android:textStyle="normal|bold"
+            android:onClick="startMultiplayer"/>
+    </RelativeLayout>
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+
+</FrameLayout>
