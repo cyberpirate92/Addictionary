@@ -60,6 +60,8 @@ public class SinglePlayer extends AppCompatActivity implements View.OnKeyListene
 
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent event) {
+        if(event.getAction() != KeyEvent.ACTION_DOWN)
+            return true;
         if(keyCode == KeyEvent.KEYCODE_ENTER) {
             if(!initSucess) {
                 Toast.makeText(this, "Sorry, Initialization failed, please refer log", Toast.LENGTH_SHORT).show();
@@ -82,7 +84,7 @@ public class SinglePlayer extends AppCompatActivity implements View.OnKeyListene
                         editText.setText(lastWord);
                         editText.setSelection(lastWord.length());
                         if(firstEntry) firstEntry = false;
-                        //listView.smoothScrollToPosition(listAdapter.getCount()+1);
+                        listView.smoothScrollToPosition(listAdapter.getCount()+1);
                     }
                     else {
                         Toast.makeText(this, "'" + word + "' is not a valid word!", Toast.LENGTH_SHORT).show();

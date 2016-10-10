@@ -22,7 +22,8 @@ public class WordListAdapter extends BaseAdapter {
     }
 
     public void addItem(String word) {
-        data.add(0,word);
+        data.add(word);
+        this.notifyDataSetChanged();
     }
 
     @Override

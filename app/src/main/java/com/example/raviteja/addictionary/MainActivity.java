@@ -20,19 +20,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
-
-        // asserts for self-test
-        try {
-            AssetManager manager = this.getAssets();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(manager.open("wordlist.txt")));
-            Toast.makeText(this, reader.readLine(), Toast.LENGTH_SHORT).show();
-            reader.close();
-        }
-        catch(Exception e) {
-            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
-        }
     }
 
     public void startSinglePlayer(View view) {
@@ -40,11 +28,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startMultiplayer(View view) {
-
+        Toast.makeText(this, "not yet functional", Toast.LENGTH_SHORT).show();
     }
 
     public void displayUserWords(View view) {
-
+        Toast.makeText(this, "not yet functional", Toast.LENGTH_SHORT).show();
     }
 
     private void navigateTo(Class c) {

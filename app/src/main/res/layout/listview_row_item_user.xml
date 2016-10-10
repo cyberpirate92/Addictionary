@@ -3,7 +3,7 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="10"
-    android:background="@android:color/holo_orange_dark"
+    android:background="#000"
     android:padding="5dp">
 
     <TextView
@@ -16,12 +16,12 @@
         android:fontFamily="casual"
         android:textStyle="normal|bold"
         android:textAlignment="textEnd"
-        android:textColor="@android:color/background_dark"/>
+        android:textColor="@android:color/holo_green_light"/>
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:src="@android:drawable/ic_input_add"/>
+        android:src="@mipmap/left_arrow"/>
 </LinearLayout>
