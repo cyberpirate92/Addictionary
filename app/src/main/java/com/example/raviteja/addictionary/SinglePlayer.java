@@ -1,6 +1,10 @@
 package com.example.raviteja.addictionary;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.Intent;
+import android.content.res.AssetManager;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,10 +22,6 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
-/**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- */
 public class SinglePlayer extends AppCompatActivity implements View.OnKeyListener {
 
     @Override
@@ -80,12 +80,23 @@ public class SinglePlayer extends AppCompatActivity implements View.OnKeyListene
                     if(x == 1) {
                         listAdapter.addItem(word);
                         String sysWord = wordUtil.suggestWord(word);
-                        listAdapter.addItem(sysWord);
-                        lastWord = sysWord;
-                        editText.setText(lastWord);
-                        editText.setSelection(lastWord.length());
-                        if(firstEntry) firstEntry = false;
-                        listView.smoothScrollToPosition(listAdapter.getCount()+1);
+                        if(sysWord != null) {
+                            listAdapter.addItem(sysWord);
+                            lastWord = sysWord;
+                            editText.setText(lastWord);
+                            editText.setSelection(lastWord.length());
+                            if (firstEntry) firstEntry = false;
+                            listView.smoothScrollToPosition(listAdapter.getCount() + 1);
+                        }
+                        else {
+                            android.app.FragmentManager manager = this.getFragmentManager();
+                            GameOverDialog dialog = new GameOverDialog();
+                            dialog.setTitle("Congratulations !");
+                            dialog.setMessage("You have successfully beat the computer.");
+                            dialog.show(manager, "WinnerDialog");
+                            Intent intent = new Intent(this, MainActivity.class);
+                            this.startActivity(intent);
+                        }
                     }
                     else if(x == -1) {
                         Toast.makeText(this, "'" + word + "' has already been used", Toast.LENGTH_SHORT).show();
