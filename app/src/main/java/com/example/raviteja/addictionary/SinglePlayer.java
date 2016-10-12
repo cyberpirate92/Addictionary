@@ -1,28 +1,22 @@
 package com.example.raviteja.addictionary;
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.AssetManager;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.MenuItem;
-import android.support.v4.app.NavUtils;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.IOException;
 
-public class SinglePlayer extends AppCompatActivity implements View.OnKeyListener {
+public class SinglePlayer extends Activity implements View.OnKeyListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +103,19 @@ public class SinglePlayer extends AppCompatActivity implements View.OnKeyListene
                 }
             }
         }
-        return false;
+        else if(keyCode == KeyEvent.KEYCODE_BACK) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Quit Game");
+            builder.setMessage("Are you sure you want to quit ?");
+            builder.setPositiveButton("Yup", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    SinglePlayer.super.onBackPressed();
+                }
+            });
+            builder.setNegativeButton("Nope", null);
+            builder.create().show();
+        }
+        return true;
     }
 }
