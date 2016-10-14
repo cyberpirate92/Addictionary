@@ -3,6 +3,7 @@ package com.example.raviteja.addictionary;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 class WordUtil {
 
@@ -62,9 +64,17 @@ class WordUtil {
     }
 
     private String suggestWordEasy(String rootWord) {
+        Random random = new Random();
         usedWords.add(rootWord);
         char[] letters = rootWord.toCharArray();
-        for(int i=0; i<4; i++) {
+        boolean[] done = new boolean[4];
+        int count = 0, i;
+        do {
+            do {
+                i = random.nextInt(4);
+            }while(done[i]);
+            count++;        // count for each position that has been checked
+            done[i] = true;
             char c = 'a';
             for(int j=0;j<25;j++) {
                 if(c+j != rootWord.charAt(i)) {
@@ -77,14 +87,14 @@ class WordUtil {
                 }
             }
             letters[i] = rootWord.charAt(i);
-        }
+        }while(count < 4);
         return null;
     }
 
     private String suggestWordHard(String rootWord) {
         usedWords.add(rootWord);
         char[] letters = rootWord.toCharArray();
-        HashMap<String, Integer> possibleWords = new HashMap<String, Integer>();
+        HashMap<String, Integer> possibleWords = new HashMap<>();
         for(int i=0; i<4; i++) {
             char c = 'a';
             for(int j=0;j<25;j++) {
@@ -105,8 +115,10 @@ class WordUtil {
                 if (entry.getValue() < min) {
                     min = entry.getValue();
                     newWord = entry.getKey();
+                    Log.d("ADDICTIONARY", "Possible Counts :: "+newWord+" : "+min);
                 }
             }
+            usedWords.add(newWord);
             return newWord;
         }
         return null;
