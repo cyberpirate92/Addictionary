@@ -5,23 +5,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class WordListAdapter extends BaseAdapter {
+class WordListAdapter extends BaseAdapter {
 
     private ArrayList<String> data;
     private Context context;
 
-    public WordListAdapter(Context context) {
+    WordListAdapter(Context context) {
         super();
         this.context = context;
-        data = new ArrayList<String>();
+        data = new ArrayList<>();
     }
 
-    public void addItem(String word) {
+    void addItem(String word) {
         data.add(word);
         this.notifyDataSetChanged();
     }
@@ -54,7 +53,7 @@ public class WordListAdapter extends BaseAdapter {
             row = layoutInflater.inflate(R.layout.listview_row_item_system, null);
 
         TextView textView = (TextView) row.findViewById(R.id.textView);
-        ImageView imageView = (ImageView) row.findViewById(R.id.imageView);
+        /* ImageView imageView = (ImageView) row.findViewById(R.id.imageView); */
         textView.setText(data.get(position));
         convertView = row;
         return convertView;

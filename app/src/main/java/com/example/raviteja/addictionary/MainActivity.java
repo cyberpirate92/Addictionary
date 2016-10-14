@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startSinglePlayer(View view) {
-        navigateTo(SinglePlayer.class);
+        navigateTo(ModeSelectionActivity.class);
     }
 
     public void startMultiplayer(View view) {

@@ -29,6 +29,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.raviteja.addictionary.MainActivity" />
         </activity>
+        <activity android:name=".ModeSelectionActivity"></activity>
     </application>
 
 </manifest>

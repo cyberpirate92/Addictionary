@@ -5,22 +5,24 @@ import android.content.Context;
 import android.content.res.AssetManager;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
-public class WordUtil {
+class WordUtil {
 
     private ArrayList<String> wordList;
     private ArrayList<String> usedWords;
+    private GameMode difficultyMode;
 
-    public WordUtil(Context context) throws IOException {
+    WordUtil(Context context, GameMode gameMode) throws IOException {
 
-        wordList = new ArrayList<String>();
-        usedWords = new ArrayList<String>();
+        wordList = new ArrayList<>();
+        usedWords = new ArrayList<>();
+        this.difficultyMode = gameMode;
         initializeWordList(context);
     }
 
@@ -38,7 +40,7 @@ public class WordUtil {
     }
 
     // must provide a lowercase word ONLY
-    public int isValidWord(String word) {
+    int isValidWord(String word) {
         if(word.length() != 4)
             return 0;
         else if(usedWords.contains(word))
@@ -52,7 +54,14 @@ public class WordUtil {
         return 0; // NOT A VALID WORD
     }
 
-    public String suggestWord(String rootWord) {
+    String suggestWord(String rootWord) {
+        if(this.difficultyMode == GameMode.HARD)
+                return suggestWordHard(rootWord);
+        else
+            return suggestWordEasy(rootWord);
+    }
+
+    private String suggestWordEasy(String rootWord) {
         usedWords.add(rootWord);
         char[] letters = rootWord.toCharArray();
         for(int i=0; i<4; i++) {
@@ -72,7 +81,59 @@ public class WordUtil {
         return null;
     }
 
-    public static int changeCount(String str1, String str2) {
+    private String suggestWordHard(String rootWord) {
+        usedWords.add(rootWord);
+        char[] letters = rootWord.toCharArray();
+        HashMap<String, Integer> possibleWords = new HashMap<String, Integer>();
+        for(int i=0; i<4; i++) {
+            char c = 'a';
+            for(int j=0;j<25;j++) {
+                if(c+j != rootWord.charAt(i)) {
+                    letters[i] = (char)(c+j);
+                    String newWord = new String(letters);
+                    if(isValidWord(newWord) == 1) {
+                        possibleWords.put(newWord, getPossibilityCount(newWord));
+                    }
+                }
+            }
+            letters[i] = rootWord.charAt(i);
+        }
+        if(possibleWords.size() > 0) {
+            int min = 1 << 29;
+            String newWord = "";
+            for (Map.Entry<String, Integer> entry : possibleWords.entrySet()) {
+                if (entry.getValue() < min) {
+                    min = entry.getValue();
+                    newWord = entry.getKey();
+                }
+            }
+            return newWord;
+        }
+        return null;
+    }
+
+    // computes the number of possible words which can be generated using the word provided
+    // excluding already used words
+    private int getPossibilityCount(String rootWord) {
+        int count = 0;
+        char[] letters = rootWord.toCharArray();
+        for(int i=0; i<4; i++) {
+            char c = 'a';
+            for(int j=0;j<25;j++) {
+                if(c+j != rootWord.charAt(i)) {
+                    letters[i] = (char)(c+j);
+                    String newWord = new String(letters);
+                    if(isValidWord(newWord) == 1) {
+                        count++;
+                    }
+                }
+            }
+            letters[i] = rootWord.charAt(i);
+        }
+        return count;
+    }
+
+    static int changeCount(String str1, String str2) {
         if(str1.length() != str2.length()) return -1;
         else {
             int count = 0;

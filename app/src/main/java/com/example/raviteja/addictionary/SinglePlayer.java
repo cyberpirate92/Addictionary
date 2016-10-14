@@ -1,11 +1,11 @@
 package com.example.raviteja.addictionary;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -21,16 +21,22 @@ public class SinglePlayer extends Activity implements View.OnKeyListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_single_player);
-
+        Intent tempIntent = this.getIntent();
+        if(tempIntent != null && tempIntent.hasExtra("difficulty")) {
+            difficultyMode = getGameMode(tempIntent.getIntExtra("difficulty", 0));
+        }
+        ActionBar actionBar = this.getActionBar();
+        if(actionBar != null) {
+            actionBar.show();
+        }
         firstEntry = true;
         listView = (ListView) findViewById(R.id.listView);
         editText = (EditText) findViewById(R.id.editText);
         listAdapter = new WordListAdapter(this.getApplicationContext());
         initSucess = true;
         try {
-            wordUtil = new WordUtil(this.getApplicationContext());
+            wordUtil = new WordUtil(this.getApplicationContext(), difficultyMode);
         } catch (IOException ex) {
             Log.e("ADDICTIONARY", ex.toString());
             Toast.makeText(this, "Debug: Cannot initialize wordlist :(", Toast.LENGTH_SHORT).show();
@@ -51,6 +57,7 @@ public class SinglePlayer extends Activity implements View.OnKeyListener {
     private WordListAdapter listAdapter;
     private WordUtil wordUtil;
     private boolean initSucess;
+    private GameMode difficultyMode;
 
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -117,5 +124,15 @@ public class SinglePlayer extends Activity implements View.OnKeyListener {
             builder.create().show();
         }
         return true;
+    }
+
+    public GameMode getGameMode(int i) {
+        switch(i) {
+            case 1:
+                return GameMode.HARD;
+            case 2:
+                return GameMode.TIMED;
+        }
+        return GameMode.EASY;
     }
 }
